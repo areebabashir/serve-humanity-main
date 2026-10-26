@@ -535,6 +535,7 @@ function Hero({ sections }: { sections: HomeSections }) {
   );
 }
 /* ---------------- ABOUT ---------------- */
+
 function About({ sections }: { sections: HomeSections }) {
   const story = sections.story ?? {};
   const points = (story.points ?? []).filter(Boolean);
@@ -542,181 +543,206 @@ function About({ sections }: { sections: HomeSections }) {
   const highlight = story.titleHighlight || "compassion into action";
 
   return (
-  <section className="relative isolate overflow-hidden py-12 sm:py-16 lg:py-18">
-  {/* Background accents */}
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute -left-24 top-16 -z-10 h-56 w-56 rounded-full bg-brand-orange/[0.08] blur-[85px] sm:h-72 sm:w-72"
-  />
-  <div
-    aria-hidden="true"
-    className="pointer-events-none absolute -right-24 bottom-0 -z-10 h-64 w-64 rounded-full bg-brand-blue/[0.07] blur-[90px] sm:h-80 sm:w-80"
-  />
+    <section className="relative isolate overflow-hidden bg-background py-16 sm:py-20 lg:py-24">
+      {/* Background decoration */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-32 top-20 -z-10 h-80 w-80 rounded-full bg-brand-orange/[0.08] blur-[100px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-32 bottom-0 -z-10 h-96 w-96 rounded-full bg-brand-blue/[0.07] blur-[110px]"
+      />
 
-  <div className="container-page grid items-center gap-9 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-    {/* LEFT: Our story */}
-    <Reveal>
-      <div className="inline-flex items-center gap-2 rounded-full border border-brand-orange/20 bg-brand-orange/[0.06] px-3 py-1.5">
-        <span className="h-1.5 w-1.5 rounded-full bg-brand-orange" />
-        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange sm:text-xs">
-          {story.eyebrow || "Our story"}
-        </span>
-      </div>
+      <div className="container-page">
+        <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 xl:gap-20">
+          {/* LEFT: Story content */}
+          <Reveal>
+            <div className="max-w-2xl">
+              {/* Section label */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-brand-orange/20 bg-brand-orange/[0.07] px-4 py-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-orange/50" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-orange" />
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand-orange sm:text-xs">
+                  {story.eyebrow || "Our story"}
+                </span>
+              </div>
 
-      <h2 className="mt-4 max-w-2xl font-display text-2xl font-bold leading-[1.15] tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-[2.7rem] xl:text-5xl">
-        {title}{" "}
-        <span className="text-gradient-brand">{highlight}</span>
-      </h2>
+              {/* Heading */}
+              <h2 className="mt-6 font-display text-3xl font-bold leading-[1.12] tracking-tight text-foreground sm:text-4xl md:text-5xl xl:text-[3.5rem]">
+                {title}{" "}
+                <span className="relative inline-block text-gradient-brand">
+                  {highlight}
+                  <span className="absolute -bottom-1 left-0 h-1 w-2/3 rounded-full bg-brand-orange/30" />
+                </span>
+              </h2>
 
-      <p className="mt-4 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-        {story.body}
-      </p>
-
-      {/* Mission points */}
-      <ul className="mt-6 space-y-3">
-        {points.map((point, index) => (
-          <Reveal
-            key={`${point}-${index}`}
-            as="li"
-            delay={index * 0.08}
-            className="group flex items-start gap-3"
-          >
-            <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-brand-orange/10 text-brand-orange transition-colors duration-300 group-hover:bg-brand-orange group-hover:text-white">
-              <CheckCircle2 className="h-3.5 w-3.5" />
-            </span>
-
-            <span className="pt-0.5 text-sm leading-6 text-foreground sm:text-[15px]">
-              {point}
-            </span>
-          </Reveal>
-        ))}
-      </ul>
-
-      {/* CTA */}
-      <div className="mt-7 flex flex-wrap items-center gap-4">
-        <Link
-          to={story.ctaLink || "/about"}
-          className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-gradient-warm px-5 py-2.5 text-sm font-bold text-white shadow-warm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
-        >
-          {story.cta || "Discover our story"}
-          <span className="grid h-6 w-6 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
-            <ArrowRight className="h-3.5 w-3.5" />
-          </span>
-        </Link>
-
-        <span className="flex items-center gap-2 text-xs font-medium text-muted-foreground sm:text-sm">
-          <Heart className="h-3.5 w-3.5 fill-brand-orange/20 text-brand-orange" />
-          Compassion in action
-        </span>
-      </div>
-    </Reveal>
-
-    {/* RIGHT: Humanitarian image and story card */}
-    <Reveal
-      delay={0.15}
-      className="relative mx-auto w-full max-w-lg lg:max-w-none"
-    >
-      <div className="relative px-3 pb-6 sm:px-5 sm:pb-8">
-        {/* Decorative outline */}
-        <div
-          aria-hidden="true"
-          className="absolute right-1 top-0 h-24 w-24 rounded-tr-[2rem] border-r border-t border-brand-orange/40 sm:right-2 sm:h-36 sm:w-36"
-        />
-
-        {/* Main image */}
-        <div className="relative overflow-hidden rounded-[1.6rem] border-4 border-white bg-secondary shadow-xl shadow-brand-blue/10 sm:rounded-[2rem] sm:border-[6px]">
-          <div className="relative aspect-[5/4.5] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=85"
-              alt="Children together, representing hope and a brighter future"
-              loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
-            />
-
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/5 to-transparent" />
-
-            {/* Image label */}
-            <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-slate-950/25 px-2.5 py-1.5 text-[10px] font-semibold text-white backdrop-blur-md sm:left-6 sm:top-6 sm:px-3 sm:text-xs">
-              <Heart className="h-3.5 w-3.5 fill-brand-orange text-brand-orange" />
-              A mission with meaning
-            </div>
-
-            {/* Image caption */}
-            <div className="absolute inset-x-0 bottom-0 p-4 text-white sm:p-6">
-              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/75 sm:text-[10px] sm:text-xs">
-                More than charity
+              {/* Description */}
+              <p className="mt-6 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base sm:leading-8">
+                {story.body}
               </p>
 
-              <h3 className="mt-1.5 max-w-sm font-display text-xl font-bold leading-tight sm:text-2xl lg:text-3xl">
-                Creating hope. Restoring dignity. Changing lives.
-              </h3>
-            </div>
-          </div>
-        </div>
-
-        {/* Floating establishment card */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="absolute -left-1 top-9 max-w-[160px] rounded-xl border border-white/80 bg-white/95 p-3 shadow-lg shadow-slate-900/10 backdrop-blur-xl sm:top-12 sm:max-w-[185px] sm:rounded-2xl sm:p-4"
-        >
-          <div className="grid h-8 w-8 place-items-center rounded-lg bg-brand-orange/10 text-brand-orange sm:h-9 sm:w-9">
-            <HandHeart className="h-4 w-4 sm:h-5 sm:w-5" />
-          </div>
-
-          <p className="mt-2 font-display text-lg font-bold text-foreground sm:mt-3 sm:text-xl">
-            {story.estLabel || "Est. 2014"}
-          </p>
-
-          <p className="mt-1 text-[11px] leading-4 text-muted-foreground sm:text-xs sm:leading-5">
-            A journey rooted in kindness and community.
-          </p>
-        </motion.div>
-
-        {/* Quote card */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="relative -mt-1 ml-4 max-w-md rounded-xl border border-border/70 bg-white p-4 shadow-lg shadow-slate-900/[0.06] sm:ml-10 sm:rounded-2xl sm:p-5"
-        >
-          <div className="flex items-start gap-3">
-            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-blue/10 text-brand-blue">
-              <Quote className="h-4 w-4 sm:h-5 sm:w-5" />
-            </div>
-
-            <div className="min-w-0">
-              <blockquote className="font-display text-sm font-semibold leading-6 text-foreground sm:text-base sm:leading-7">
-                {story.quote
-                  ? `“${story.quote}”`
-                  : "Every act of kindness has the power to change a life."}
-              </blockquote>
-
-              {story.quoteAttr && (
-                <p className="mt-2 text-xs font-medium text-muted-foreground">
-                  — {story.quoteAttr}
-                </p>
+              {/* Mission points */}
+              {points.length > 0 && (
+                <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+                  {points.map((point, index) => (
+                    <Reveal
+                      key={`${point}-${index}`}
+                      as="li"
+                      delay={index * 0.08}
+                      className="group flex items-start gap-3 rounded-2xl border border-border/60 bg-card/70 p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-brand-orange/30 hover:bg-brand-orange/[0.035] hover:shadow-md"
+                    >
+                      <span className="mt-0.5 grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-brand-orange/10 text-brand-orange transition-colors duration-300 group-hover:bg-brand-orange group-hover:text-white">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </span>
+                      <span className="pt-1 text-sm font-medium leading-6 text-foreground/85">
+                        {point}
+                      </span>
+                    </Reveal>
+                  ))}
+                </ul>
               )}
+
+              {/* CTA */}
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Link
+                  to={story.ctaLink || "/about"}
+                  className="group inline-flex min-h-12 items-center gap-3 rounded-full bg-gradient-warm px-5 py-3 text-sm font-bold text-white shadow-warm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                >
+                  {story.cta || "Discover our story"}
+                  <span className="grid h-7 w-7 place-items-center rounded-full bg-white/20 transition-transform duration-300 group-hover:translate-x-1">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </Link>
+
+                <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <span className="grid h-9 w-9 place-items-center rounded-full border border-brand-orange/20 bg-brand-orange/[0.06]">
+                    <Heart className="h-4 w-4 fill-brand-orange/20 text-brand-orange" />
+                  </span>
+                  Compassion in action
+                </div>
+              </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="mt-4 flex items-center justify-between border-t border-border/70 pt-3">
-            <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-brand-blue sm:text-[10px] sm:text-xs">
-              Our guiding belief
-            </span>
+          {/* RIGHT: Image composition */}
+          <Reveal
+            delay={0.15}
+            className="relative mx-auto w-full max-w-xl lg:max-w-none"
+          >
+            <div className="relative px-5 pb-9 pt-5 sm:px-8 sm:pb-12 sm:pt-8">
+              {/* Decorative frame */}
+              <div
+                aria-hidden="true"
+                className="absolute right-0 top-0 h-32 w-32 rounded-tr-[2.5rem] border-r-2 border-t-2 border-brand-orange/40 sm:h-44 sm:w-44"
+              />
+              <div
+                aria-hidden="true"
+                className="absolute bottom-2 left-0 h-28 w-28 rounded-bl-[2.5rem] border-b-2 border-l-2 border-brand-blue/25 sm:h-36 sm:w-36"
+              />
 
-            <Heart className="h-3.5 w-3.5 fill-brand-orange/20 text-brand-orange" />
-          </div>
-        </motion.div>
+              {/* Main image */}
+              <div className="relative z-10 overflow-hidden rounded-[1.75rem] border border-white/70 bg-secondary shadow-2xl shadow-brand-blue/10 sm:rounded-[2.25rem]">
+                <div className="relative aspect-[4/4.3] overflow-hidden sm:aspect-[5/4.5]">
+                  <img
+                    src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=85"
+                    alt="Children sharing a moment of hope and happiness"
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+                  />
+
+                  {/* Image overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/10 to-slate-950/5" />
+
+                  {/* Image badge */}
+                  <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/25 px-3 py-2 text-[10px] font-semibold text-white shadow-lg backdrop-blur-md sm:left-6 sm:top-6 sm:text-xs">
+                    <Heart className="h-3.5 w-3.5 fill-brand-orange text-brand-orange" />
+                    A mission with meaning
+                  </div>
+
+                  {/* Image text */}
+                  <div className="absolute inset-x-0 bottom-0 p-5 text-white sm:p-8">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/75">
+                      More than charity
+                    </p>
+                    <h3 className="mt-3 max-w-sm font-display text-2xl font-bold leading-tight sm:text-3xl lg:text-4xl">
+                      Creating hope.
+                      <br />
+                      Restoring dignity.
+                      <br />
+                      Changing lives.
+                    </h3>
+                    <div className="mt-5 h-1 w-14 rounded-full bg-brand-orange" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating establishment card */}
+              <motion.div
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="absolute -left-1 top-12 z-20 w-40 rounded-2xl border border-white/80 bg-white/95 p-4 shadow-xl shadow-slate-900/10 backdrop-blur-xl sm:-left-2 sm:top-16 sm:w-48 sm:p-5"
+              >
+                <div className="grid h-10 w-10 place-items-center rounded-xl bg-brand-orange/10 text-brand-orange">
+                  <HandHeart className="h-5 w-5" />
+                </div>
+
+                <p className="mt-3 font-display text-xl font-bold text-foreground sm:text-2xl">
+                  {story.estLabel || "Est. 2014"}
+                </p>
+
+                <p className="mt-1 text-xs leading-5 text-muted-foreground">
+                  A journey rooted in kindness and community.
+                </p>
+              </motion.div>
+
+              {/* Floating quote card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.35 }}
+                className="relative z-20 -mt-5 ml-5 max-w-md rounded-2xl border border-border/70 bg-card p-4 shadow-xl shadow-slate-900/[0.07] sm:ml-12 sm:p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-blue/10 text-brand-blue">
+                    <Quote className="h-5 w-5" />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <blockquote className="font-display text-sm font-semibold leading-6 text-foreground sm:text-base sm:leading-7">
+                      {story.quote
+                        ? `“${story.quote}”`
+                        : "Every act of kindness has the power to change a life."}
+                    </blockquote>
+
+                    {story.quoteAttr && (
+                      <p className="mt-2 text-xs font-medium text-muted-foreground">
+                        — {story.quoteAttr}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center justify-between border-t border-border/70 pt-3">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-brand-blue sm:text-xs">
+                    Our guiding belief
+                  </span>
+                  <Heart className="h-4 w-4 fill-brand-orange/20 text-brand-orange" />
+                </div>
+              </motion.div>
+            </div>
+          </Reveal>
+        </div>
       </div>
-    </Reveal>
-  </div>
-</section>
+    </section>
   );
 }
+
 
 /* ---------------- VALUES ---------------- */
 function Values({ sections }: { sections: HomeSections }) {
