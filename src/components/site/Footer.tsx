@@ -216,9 +216,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {sections.copyright || "Serve Humanity. All rights reserved."}
           </p>
-          <p className="inline-flex items-center gap-1.5">
-            Made with <Heart className="h-3 w-3 fill-brand-orange text-brand-orange animate-heartbeat" /> for humanity
-          </p>
+      
         </div>
       </div>
     </footer>

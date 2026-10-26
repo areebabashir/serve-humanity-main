@@ -1,5 +1,4 @@
-@import "tailwindcss" source(none);
-@source "../src";
+@import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -161,6 +160,14 @@
   backdrop-filter: blur(20px) saturate(160%);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
+/* Glass card utility */
+@utility glass-card {
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 @utility shadow-soft {
   box-shadow: var(--shadow-soft);
 }
@@ -182,7 +189,7 @@
   padding-right: 1.25rem;
 }
 
-/** Content block that sits under PageHero — adds top spacing from the hero */
+/* Content block that sits under PageHero — adds top spacing from the hero */
 @utility page-section {
   width: 100%;
   max-width: 1280px;

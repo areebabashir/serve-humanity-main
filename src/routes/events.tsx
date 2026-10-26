@@ -14,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ArrowRight } from "lucide-react";
 
 type EventsSections = {
   hero?: { eyebrow?: string; title?: string; titleHighlight?: string; description?: string };
@@ -116,60 +117,115 @@ export default function Page() {
               presidents from their chapter Events page.
             </p>
           ) : (
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {events.map((e, i) => (
-                <Reveal key={e.id} delay={i}>
-                  <div className="group relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:shadow-elevated">
-                    <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand-orange/20 blur-3xl transition-all group-hover:scale-125" />
-                    <div className="relative">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-brand-accent">
-                        <Calendar className="h-3.5 w-3.5" /> {e.date}
-                      </div>
-                      <h3 className="mt-3 font-display text-xl font-bold">{e.title}</h3>
-                      {e.chapterName ? (
-                        <p className="mt-1 text-xs font-medium text-brand-blue">{e.chapterName} chapter</p>
-                      ) : null}
-                      <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <MapPin className="h-3.5 w-3.5" /> {e.location}
-                      </p>
-                      <div className="mt-5 flex gap-2">
-                        <div className="flex-1 rounded-2xl bg-secondary p-3">
-                          <Clock className="h-3.5 w-3.5 text-brand-blue" />
-                          <div className="mt-1 font-display font-bold">
-                            {daysUntilEvent(e.dateIso, e.days)}d
-                          </div>
-                          <div className="text-[10px] uppercase text-muted-foreground">to go</div>
-                        </div>
-                        <div className="flex-1 rounded-2xl bg-secondary p-3">
-                          <Users className="h-3.5 w-3.5 text-brand-accent" />
-                          <div className="mt-1 font-display text-xs font-bold">
-                            {e.capacity || "—"}
-                          </div>
-                          <div className="text-[10px] uppercase text-muted-foreground">capacity</div>
-                        </div>
-                      </div>
-                      {isEventPast(e.dateIso) ? (
-                        <div className="mt-4 w-full rounded-full border border-border bg-secondary py-2.5 text-center text-sm font-semibold text-muted-foreground">
-                          Event ended
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setActive(e);
-                            setDoneMsg("");
-                            setError("");
-                          }}
-                          className="mt-4 w-full rounded-full bg-gradient-warm py-2.5 text-sm font-semibold text-white shadow-warm transition hover:-translate-y-0.5"
-                        >
-                          Register
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
+            <div className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+  {events.map((e, i) => {
+    const past = isEventPast(e.dateIso);
+    const days = daysUntilEvent(e.dateIso, e.days);
+
+    return (
+      <Reveal key={e.id} delay={Math.min(i * 0.08, 0.3)}>
+        <div className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all duration-300 hover:-translate-y-1.5 hover:border-brand-orange/40 hover:shadow-elevated">
+          {/* Top accent */}
+          <div className="h-1.5 w-full bg-gradient-warm" />
+
+          <div className="pointer-events-none absolute -right-16 -top-16 h-44 w-44 rounded-full bg-brand-orange/10 blur-3xl transition-transform duration-500 group-hover:scale-150" />
+
+          <div className="relative flex flex-1 flex-col p-5 sm:p-6">
+            {/* Date and status */}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 rounded-full bg-brand-orange/10 px-3 py-2 text-xs font-bold text-brand-accent">
+                <Calendar className="h-3.5 w-3.5" />
+                {e.date}
+              </div>
+
+              <span
+                className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider ${
+                  past
+                    ? "bg-secondary text-muted-foreground"
+                    : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                }`}
+              >
+                {past ? "Completed" : "Upcoming"}
+              </span>
             </div>
+
+            {/* Event details */}
+            <h3 className="mt-5 font-display text-xl font-bold leading-snug transition-colors group-hover:text-brand-accent sm:text-2xl">
+              {e.title}
+            </h3>
+
+            {e.chapterName && (
+              <p className="mt-2 text-xs font-semibold text-brand-blue">
+                {e.chapterName} Chapter
+              </p>
+            )}
+
+            <p className="mt-3 flex items-start gap-2 text-sm leading-6 text-muted-foreground">
+              <MapPin className="mt-1 h-4 w-4 shrink-0 text-brand-accent" />
+              <span>{e.location}</span>
+            </p>
+
+            {/* Countdown and capacity */}
+            <div className="mt-6 grid grid-cols-2 gap-3">
+              <div className="rounded-2xl bg-secondary/80 p-4">
+                <div className="flex items-center gap-2 text-brand-blue">
+                  <Clock className="h-4 w-4" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider">
+                    Countdown
+                  </span>
+                </div>
+
+                <p className="mt-2 font-display text-2xl font-bold">
+                  {past ? "—" : days}
+                  {!past && (
+                    <span className="ml-1 text-xs font-medium text-muted-foreground">
+                      {days === 1 ? "day" : "days"}
+                    </span>
+                  )}
+                </p>
+              </div>
+
+              <div className="rounded-2xl bg-secondary/80 p-4">
+                <div className="flex items-center gap-2 text-brand-accent">
+                  <Users className="h-4 w-4" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider">
+                    Capacity
+                  </span>
+                </div>
+
+                <p className="mt-2 truncate font-display text-lg font-bold">
+                  {e.capacity || "Not specified"}
+                </p>
+              </div>
+            </div>
+
+            {/* Register button */}
+            <div className="mt-auto pt-6">
+              {past ? (
+                <div className="flex w-full items-center justify-center gap-2 rounded-full border border-border bg-secondary py-3 text-sm font-semibold text-muted-foreground">
+                  Event ended
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setActive(e);
+                    setDoneMsg("");
+                    setError("");
+                  }}
+                  className="group/btn flex w-full items-center justify-center gap-2 rounded-full bg-gradient-warm py-3.5 text-sm font-bold text-white shadow-warm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange focus-visible:ring-offset-2"
+                >
+                  Register for event
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </Reveal>
+    );
+  })}
+</div>
           )}
         </section>
       </SiteLayout>
